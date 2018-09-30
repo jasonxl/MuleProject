@@ -35,7 +35,18 @@ http://www.mulesoft.org/schema/mule/xml http://www.mulesoft.org/schema/mule/xml/
 		<logger
 			message="#[flowVars.LogMsg + &quot;\nResponse Message (RAW): \n&quot;+ message.payloadAs(java.lang.String)]"
 			level="INFO" doc:name="Log Raw Response" />
+		<choice doc:name="Check Data Found">
+			<when expression="payload==''">
+				<expression-component doc:name="Initialise Variables"><![CDATA[flowVars.statusCode="No Data Found";
+flowVars.exceptionMsg="No Cities Found.";]]></expression-component>
+				<flow-ref name="sf_commonBusinessException" doc:name="Raise Business Exception" />
+
+			</when>
+			<otherwise>
 		<flow-ref name="sf_get_cityFlow_response" doc:name="Generate Response Message" />
+			</otherwise>
+		</choice>
+
 	</sub-flow>
 	<sub-flow name="sf_get_cityFlow_response">
 		<dw:transform-message doc:name="Extract Response">

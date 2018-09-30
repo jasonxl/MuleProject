@@ -17,10 +17,12 @@ http://www.mulesoft.org/schema/mule/xml http://www.mulesoft.org/schema/mule/xml/
 	<sub-flow name="sf_get_weather_request">
 		<expression-component doc:name="Initialise Variables"><![CDATA[flowVars.qpCity= message.inboundProperties.'http.query.params'.city;
 flowVars.qpCountry= message.inboundProperties.'http.query.params'.country;]]></expression-component>
-        <dw:transform-message doc:name="Generate Request Message" metadata:id="aa019d34-59e0-49e7-899a-bcdca69f8aa9">
-            <dw:input-payload/>
-            <dw:input-variable mimeType="application/java" variableName="qpCity"/>
-            <dw:set-payload><![CDATA[%dw 1.0
+		<dw:transform-message doc:name="Generate Request Message"
+			metadata:id="aa019d34-59e0-49e7-899a-bcdca69f8aa9">
+			<dw:input-payload />
+			<dw:input-variable mimeType="application/java"
+				variableName="qpCity" />
+			<dw:set-payload><![CDATA[%dw 1.0
 %output application/xml
 %namespace ns0 http://www.webserviceX.NET
 ---
@@ -30,8 +32,7 @@ flowVars.qpCountry= message.inboundProperties.'http.query.params'.country;]]></e
 		ns0#CountryName: inboundProperties."http.query.params".country
 	}
 }]]></dw:set-payload>
-        </dw:transform-message>
-
+		</dw:transform-message>
 		<logger
 			message="#[flowVars.LogMsg + &quot;\nRequest Message (Transformed): \n&quot; + payload]"
 			level="INFO" doc:name="Log Transform Request Message" />
@@ -41,7 +42,17 @@ flowVars.qpCountry= message.inboundProperties.'http.query.params'.country;]]></e
 		<logger
 			message="#[flowVars.LogMsg + &quot;\nResponse Message (RAW): \n&quot;+ message.payloadAs(java.lang.String)]"
 			level="INFO" doc:name="Log Raw Response" />
-		<flow-ref name="sf_get_weather_response" doc:name="Generate Response Message" />
+		<choice doc:name="Check Data Found">
+			<when expression="payload==''">
+				<expression-component doc:name="Initialise Variables"><![CDATA[flowVars.statusCode="No Data Found";
+flowVars.exceptionMsg="No Weather Information Found.";]]></expression-component>
+				<flow-ref name="sf_commonBusinessException" doc:name="Raise Business Exception" />
+
+			</when>
+			<otherwise>
+				<flow-ref name="sf_get_weather_response" doc:name="Generate Response Message" />
+			</otherwise>
+		</choice>
 
 	</sub-flow>
 	<sub-flow name="sf_get_weather_response">

@@ -67,6 +67,11 @@ types:
             application/json:
               type: Error
               example: !include examples/error_message_415.json
+        422:
+          body:
+            application/json:
+              type: Error
+              example: !include examples/error_message_422.json        
         500:
           body:
             application/json:
@@ -113,6 +118,11 @@ types:
           application/json:
             type: Error
             example: !include examples/error_message_415.json
+      422:
+        body:
+          application/json:
+            type: Error
+            example: !include examples/error_message_422.json      
       500:
         body:
           application/json:

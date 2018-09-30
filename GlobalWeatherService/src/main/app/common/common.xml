@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<mule xmlns:metadata="http://www.mulesoft.org/schema/mule/metadata" xmlns:dw="http://www.mulesoft.org/schema/mule/ee/dw"
-	xmlns:tracking="http://www.mulesoft.org/schema/mule/ee/tracking" xmlns="http://www.mulesoft.org/schema/mule/core"
-	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+<mule xmlns:metadata="http://www.mulesoft.org/schema/mule/metadata"
+	xmlns:dw="http://www.mulesoft.org/schema/mule/ee/dw" xmlns:tracking="http://www.mulesoft.org/schema/mule/ee/tracking"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
 	xmlns:spring="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd
 http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
@@ -33,8 +33,8 @@ flowVars.LogMsg="\nPath Address: " + flowVars.TargetURL + " - Correlation ID: " 
 		</dw:transform-message>
 	</sub-flow>
 	<sub-flow name="sf_commonBusinessException">
-                <dw:transform-message doc:name="Business Exception">
-                    <dw:set-payload><![CDATA[%dw 1.0
+		<dw:transform-message doc:name="Business Exception">
+			<dw:set-payload><![CDATA[%dw 1.0
 %output application/json
 ---
 {
@@ -43,7 +43,8 @@ flowVars.LogMsg="\nPath Address: " + flowVars.TargetURL + " - Correlation ID: " 
 	statusCode: flowVars.statusCode,
 	message: flowVars.exceptionMsg
 }]]></dw:set-payload>
-                </dw:transform-message>
-                <set-property propertyName="http.status" value="422" doc:name="Property"/>
+		</dw:transform-message>
+		<set-property propertyName="http.status" value="422"
+			doc:name="Property" />
 	</sub-flow>
 </mule>

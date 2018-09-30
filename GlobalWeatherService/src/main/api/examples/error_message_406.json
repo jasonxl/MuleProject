@@ -3,4 +3,4 @@
    "status": "406",
    "statusCode": "Not acceptable",
    "message": "The requested format in the Accept headers is not acceptable."
-}
+} 

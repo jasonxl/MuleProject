@@ -12,7 +12,8 @@ http://www.springframework.org/schema/context http://www.springframework.org/sch
 	<context:property-placeholder
 		location="properties/globalweather-${mule.env}.properties" />
 	<http:listener-config name="weather-api-httpListenerConfig"
-		host="${http.host}" port="${http.port}" doc:name="HTTP Listener Configuration" basePath="/v1"/>
+		host="${http.host}" port="${http.port}" doc:name="HTTP Listener Configuration"
+		basePath="/v1" />
 	<ws:consumer-config name="WS_Consumer_Weather"
 		wsdlLocation="global-weather.wsdl" service="GlobalWeather" port="GlobalWeatherSoap"
 		serviceAddress="${wsdl.weatherapp.url}" doc:name="Web Service Consumer" />

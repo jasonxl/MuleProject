@@ -89,7 +89,7 @@ flowVars.exceptionMsg="The request has a media type that is not supported.";]]><
 				doc:name="Property" />
 			<expression-component doc:name="Initialise Variables"><![CDATA[flowVars.status="500";
 flowVars.statusCode="Internal Server Error";
-flowVars.exceptionMsg="Try again later";]]></expression-component>
+flowVars.exceptionMsg="Try again later.";]]></expression-component>
 			<flow-ref name="sf_commonErrorHandling" doc:name="Common Error Logging" />
 		</apikit:mapping>
 	</apikit:mapping-exception-strategy>
